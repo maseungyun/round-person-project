@@ -1,0 +1,390 @@
+/* --- style.css 파일 전체 코드 (최종 반영: 이미지 패턴 사용) --- */
+
+
+
+/* 폰트 정의 (@font-face)는 MyFont1.ttf 파일에 연결되었다고 가정합니다. */
+
+@font-face {
+
+font-family: "AxisFont";
+
+src: url('./fonts/MyFont1.ttf') format('truetype');
+
+font-weight: 400;
+
+font-style: normal;
+
+}
+
+
+
+@font-face {
+
+font-family: "ButtonFont";
+
+src: url('./fonts/MyFont.ttf') format('truetype');
+
+font-weight: 400;
+
+font-style: normal;
+
+}
+
+
+
+body {
+
+margin: 0;
+
+padding: 0;
+
+width: 100vw;
+
+height: 100vh;
+
+/* 배경색을 흰색으로 유지 */
+
+background-color: #ffffff;
+
+font-family: 'ButtonFont', sans-serif;
+
+color: #333333;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+position: relative;
+
+overflow: hidden;
+
+
+/* ❗❗❗ [핵심 수정 부분] 이미지 패턴 배경 사용 ❗❗❗ */
+
+/* 1. 이미지를 /images/dongle_pattern.png 에 저장했다고 가정합니다. */
+
+/* 2. background-repeat: repeat; 로 벽지 패턴처럼 반복 설정합니다. */
+
+background-image: url('./images/dongle_pattern.png');
+
+background-repeat: repeat;
+
+background-size: 200px 200px; /* 패턴 크기 설정 (필요에 따라 조정) */
+
+opacity: 1; /* body 전체의 투명도를 조정할 필요가 없습니다. */
+
+}
+
+
+
+/* ❗❗❗ body::before 가상 요소 및 JS 생성 요소 스타일은 제거되어야 합니다. ❗❗❗ */
+
+
+
+/* ❗❗❗ 새로운 숨김 클래스 추가 ❗❗❗ */
+
+.hidden {
+
+display: none !important;
+
+}
+
+
+
+
+
+/* 축 이름 컨테이너 (3D 위에 겹쳐 표시) */
+
+#axis-labels-container {
+
+position: absolute;
+
+top: 0;
+
+left: 0;
+
+width: 100%;
+
+height: 100%;
+
+pointer-events: none;
+
+z-index: 10;
+
+}
+
+
+
+/* 3D 캔버스 컨테이너 */
+
+#canvas-container {
+
+position: absolute;
+
+top: 0;
+
+left: 0;
+
+width: 100%;
+
+height: 100%;
+
+z-index: 1;
+
+}
+
+
+
+/* 개별 축 이름 스타일 */
+
+.axis-label {
+
+position: absolute;
+
+color: #333333;
+
+padding: 5px 8px;
+
+background-color: rgba(255, 255, 255, 0.7);
+
+border-radius: 4px;
+
+font-size: 22px;
+
+font-weight: bold;
+
+font-family: 'AxisFont', sans-serif;
+
+transform: translate(-50%, -50%);
+
+pointer-events: none;
+
+white-space: nowrap;
+
+z-index: 100;
+
+}
+
+
+
+/* ❗❗❗ 전역 버튼 스타일 (.ui-button) 정의 ❗❗❗ */
+
+.ui-button {
+
+padding: 25px 50px;
+
+background-color: #FFCC99; /* 파스텔 오렌지색 */
+
+color: #1a1a1a;
+
+border: none;
+
+border-radius: 8px;
+
+cursor: pointer;
+
+font-size: 24px;
+
+font-weight: bold;
+
+font-family: 'ButtonFont', sans-serif;
+
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+transition: background-color 0.3s;
+
+z-index: 100;
+
+}
+
+
+
+.ui-button:hover {
+
+background-color: #FFB366; /* 부드러운 파스텔 주황 */
+
+}
+
+
+
+/* next-step-button의 위치만 잡아주는 스타일 */
+
+#next-step-button.ui-button {
+
+position: fixed;
+
+bottom: 60px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+}
+
+
+
+/* 메시지 오버레이 스타일 */
+
+#webcam-overlay,
+
+.phase-message-overlay {
+
+font-family: 'ButtonFont', sans-serif;
+
+}
+
+
+
+.phase-message-overlay {
+
+position: fixed;
+
+top: 43%;
+
+left: 50%;
+
+transform: translate(-50%, -50%);
+
+width: 480px;
+
+padding: 35px;
+
+background-color: rgba(255, 255, 255, 0.9);
+
+color: #333333;
+
+text-align: center;
+
+border-radius: 12px;
+
+box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+
+z-index: 150;
+
+pointer-events: none;
+
+}
+
+
+
+.phase-message-overlay h2 {
+
+color: #FFCC99; /* 파스텔 오렌지색 */
+
+margin-top: 0;
+
+font-size: 26px;
+
+}
+
+
+
+.phase-message-overlay p {
+
+font-size: 18px;
+
+line-height: 1.6;
+
+}
+
+
+
+/* 💡 [웹캠 오버레이 스타일] */
+
+.webcam-overlay {
+
+position: fixed;
+
+top: 0;
+
+left: 0;
+
+width: 100%;
+
+height: 100%;
+
+background: rgba(0, 0, 0, 0.9);
+
+display: flex;
+
+flex-direction: column;
+
+justify-content: center; /* 수평 중앙 정렬 */
+
+align-items: center; /* 수직 중앙 정렬 */
+
+z-index: 1000;
+
+color: white;
+
+font-family: 'ButtonFont', sans-serif;
+
+display: none;
+
+}
+
+
+
+.webcam-overlay h2 {
+
+font-size: 26px;
+
+margin-bottom: 30px;
+
+color: #FFCC99; /* 파스텔 오렌지색 */
+
+}
+
+
+
+/* 육각형 영역 마스크 컨테이너 (크기 450px 유지) */
+
+#hex-clip-mask {
+
+width: 450px;
+
+height: 450px;
+
+position: relative;
+
+overflow: hidden;
+
+margin-bottom: 30px;
+
+}
+
+
+
+/* 실시간 웹캠 캔버스 스타일 (민트색 테두리 제거 유지) */
+
+#display-canvas {
+
+display: block;
+
+border: none;
+
+}
+
+
+
+/* 웹캠 컨트롤 버튼 레이아웃 */
+
+.webcam-controls {
+
+position: fixed;
+
+bottom: 60px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+display: flex;
+
+gap: 15px;
+
+z-index: 1001;
+
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>[동글동글한 사람이 되자!] 프로젝트</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+
+<div id="canvas-container">
+
+</div>
+
+
+
+<div id="axis-labels-container">
+
+</div>
+
+
+
+<div id="webcam-overlay" class="webcam-overlay">
+
+
+<h2>✨ 동글동글한 당신의 안녕을 담아보아요!</h2>
+
+
+
+<div id="hex-clip-mask">
+
+<canvas id="display-canvas"></canvas>
+
+</div>
+
+
+<canvas id="webcam-canvas" style="display:none;"></canvas>
+
+
+<video id="webcam-video" autoplay playsinline style="display:none;"></video>
+
+
+<div class="webcam-controls">
+
+<button id="capture-button" class="ui-button">📷 사진 찍기!</button>
+
+<button id="retake-button" class="ui-button" style="display:none;">다시 찍기!</button>
+
+</div>
+
+
+</div>
+
+
+
+<button id="next-step-button" class="ui-button">다음 단계로</button>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
